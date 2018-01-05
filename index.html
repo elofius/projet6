@@ -14,41 +14,54 @@
         <script src="js/locale-all.js"></script>
     </head>
     <body>
-    <div id="calendar"></div>
+        <button id="bouton">Cacher calendrier</button>
+        <div id="calendar"></div>
     
-    <script>
-        var parametres = {
-            //langue du calendrier
-            locale: 'fr',
-            //entête du calendrier          
-            header : {
-                left:   'prev,next',
-                center: 'title',
-                right:  'today month,agendaWeek,agendaDay'
-            },
-            minTime: '09:00',
-            maxTime: '17:00',
-            weekends: false,
-            defaultView : 'agendaWeek',
-            selectable: true,
-            select: function( start, end, jsEvent, view ){
-                //start est l'heure de début de la sélection
-                //end est l'heure de fin de la sélection
-                //jsEvent contient les informations Javascript telles que les cooredonnées de souris
-                //view contient les éléments de la vue actuelle
-                if (view.type != 'month')
-                {
-                    alert('Heure de début de sélection : ' + start.format('HH:mm') + '\n' + 'Heure de fin de sélection : ' + end.format('HH:mm'));
-                }else{
-                    alert('Vous avez sélectionné du ' + start.format('DD/MM/YYY') + ' au ' + end.format('DD/MM/YYY'));
+        <script>
+            var parametres = {
+                //langue du calendrier
+                locale: 'fr',
+                //entête du calendrier          
+                header : {
+                    left:   'prev,next',
+                    center: 'title',
+                    right:  'today month,agendaWeek,agendaDay'
+                },
+                minTime: '09:00',
+                maxTime: '17:00',
+                weekends: false,
+                defaultView : 'agendaWeek',
+                selectable: true,
+                select: function( start, end, jsEvent, view ){
+                    //start est l'heure de début de la sélection
+                    //end est l'heure de fin de la sélection
+                    //jsEvent contient les informations Javascript telles que les cooredonnées de souris
+                    //view contient les éléments de la vue actuelle
+                    if (view.type != 'month')
+                    {
+                        alert('Heure de début de sélection : ' + start.format('HH:mm') + '\n' + 'Heure de fin de sélection : ' + end.format('HH:mm'));
+                    }else{
+                        alert('Vous avez sélectionné du ' + start.format('DD/MM/YYY') + ' au ' + end.format('DD/MM/YYY'));
+                    }
+
                 }
-
             }
-        }
-
-        $(document).ready(function() {
-            $('#calendar').fullCalendar(parametres); //nous appelons dorénavant notre calendrier avec la variable parametres en guise de paramètres.
-        });
-    </script>
+            //Fonction qui permet d'afficher ou cacher le calendrier
+            function switch_view(parametre){
+                if ($('#calendar').html() != ""){
+                    $('#calendar').fullCalendar('destroy');
+                    $('#bouton').html('Montrer calendrier');
+                }else{
+                    $('#calendar').fullCalendar(parametre);
+                    $('#bouton').html('Cacher calendrier');
+                }
+            }
+            $(document).ready(function() {
+                $('#calendar').fullCalendar(parametres); //nous appelons dorénavant notre calendrier avec la variable parametres en guise de paramètres.
+                $('#bouton').on('click', function(){ //lorsqu'on clique sur le bouton nous lancçons la fonction switch_view
+                    switch_view(parametres);
+                });
+            });
+        </script>
     </body>
 </html>
