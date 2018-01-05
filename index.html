@@ -2,16 +2,19 @@
 <html lang="fr">
     <head>
         <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <title>FullCalendar</title>
         
-        <!--Fichier CSS-->
+        <!--Fichiers CSS-->
         <link rel="stylesheet" href="css/fullcalendar.min.css">
-
+        <link rel="stylesheet" href="css/bootstrap.min.css">
+        
         <!--Fichiers JS-->
         <script src="js/jquery-3.2.1.min.js"></script>
         <script src="js/moment.js"></script>
         <script src="js/fullcalendar.min.js"></script>
         <script src="js/locale-all.js"></script>
+        <script src="js/bootstrap.min.js"></script>
     </head>
     <body>
         <button id="bouton">Cacher calendrier</button>
@@ -32,6 +35,7 @@
                 weekends: false,
                 defaultView : 'agendaWeek',
                 selectable: true,
+                themeSystem: 'bootstrap3',
                 select: function( start, end, jsEvent, view ){
                     //start est l'heure de début de la sélection
                     //end est l'heure de fin de la sélection
