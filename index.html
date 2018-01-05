@@ -38,8 +38,14 @@
                 //end est l'heure de fin de la sélection
                 //jsEvent contient les informations Javascript telles que les cooredonnées de souris
                 //view contient les éléments de la vue actuelle
-
-               alert('Heure de début de sélection : ' + start.format('HH:mm') + '\n' + 'Heure de fin de sélection : ' + end.format('HH:mm'));
+                
+                //si le type de la vue courante est différent de 'month'
+                if (view.type != 'month')
+                    {
+                        alert('Heure de début de sélection : ' + start.format('HH:mm') + '\n' + 'Heure de fin de sélection : ' + end.format('HH:mm'));
+                    }else{
+                        alert('Vous avez sélectionné du ' + start.format('DD/MM/YYY') + ' au ' + end.format('DD/MM/YYY'));
+                    }
             }
         });
     });
