@@ -1,4 +1,4 @@
 # Fichiers sources pour le projet 6.
 <p>Formation Openclassrooms.com</p>
-<https://openclassrooms.com/courses/4808886?status=draft>
+<p><a href="https://openclassrooms.com/courses/4808886?status=draft">Réaliser un calendrier avec la librairie Fullcalendar</a></p>
  
