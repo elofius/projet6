@@ -33,7 +33,19 @@
                         location.href = 'http://www.openclassrooms.com';
                     }
                 }
-            }
+            },
+            businessHours: [ 
+                {
+                    dow: [ 1, 2, 3 ], // Lundi, mardi et mercredi
+                    start: '08:00', // On débute à 8 heures
+                    end: '18:00' // On termine à 18 heures
+                },
+                {
+                    dow: [ 4, 5 ], // Jeudi et vendredi
+                    start: '10:00', // On débute à 10 heures
+                    end: '16:00' // On termine à 18 heures
+                }
+            ]
         });
     });
     </script>
