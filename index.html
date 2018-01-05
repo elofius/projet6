@@ -33,6 +33,14 @@
             weekends: false, // Cache les Samedi/dimanche
             defaultView : 'agendaWeek', // vue par défaut sur l'agenda hebdomadaire
             selectable: true, // on autorise la selection dans le calendrier
+            select: function( start, end, jsEvent, view ){
+                //start est l'heure de début de la sélection
+                //end est l'heure de fin de la sélection
+                //jsEvent contient les informations Javascript telles que les cooredonnées de souris
+                //view contient les éléments de la vue actuelle
+
+               alert('Heure de début de sélection : ' + start.format('HH:mm') + '\n' + 'Heure de fin de sélection : ' + end.format('HH:mm'));
+            }
         });
     });
     </script>
