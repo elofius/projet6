@@ -1,2 +1,4 @@
-# projet6
-Sources du projet 6 
+# Fichiers sources pour le projet 6.
+<p>Formation Openclassrooms.com</p>
+<https://openclassrooms.com/courses/4808886?status=draft>
+ 
