@@ -22,9 +22,17 @@
         $('#calendar').fullCalendar({
             locale: 'fr',
             header : {
-                left:   'prev,next', //les boutons suivant et précédent viennent àgauche
+                left:   'prev,next buttonOC', //les boutons suivant et précédent viennent à gauche et ajout d'un customButton
                 center: 'title', // le titre se retrouve au centre
                 right:  'today month,agendaWeek,agendaDay' //aujourd'hui reste à sa place mais nous lui rajoutons trois boutons
+            },
+            customButtons: {
+                buttonOC: {
+                    text: 'OpenClassRooms',
+                    click: function() {
+                        location.href = 'http://www.openclassrooms.com';
+                    }
+                }
             }
         });
     });
