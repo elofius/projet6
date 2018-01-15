@@ -25,11 +25,9 @@
                 //langue du calendrier
                 locale: 'fr',
                 //entête du calendrier          
-                header : {
-                    left:   'prev,next',
-                    center: 'title',
-                    right:  'today month,agendaWeek,agendaDay'
-                },
+                header : false,
+                //hauteur automatique
+                height : 'auto',
                 minTime: '09:00',
                 maxTime: '17:00',
                 weekends: false,
@@ -50,21 +48,8 @@
 
                 }
             }
-            //Fonction qui permet d'afficher ou cacher le calendrier
-            function switch_view(parametre){
-                if ($('#calendar').html() != ""){
-                    $('#calendar').fullCalendar('destroy');
-                    $('#bouton').html('Montrer calendrier');
-                }else{
-                    $('#calendar').fullCalendar(parametre);
-                    $('#bouton').html('Cacher calendrier');
-                }
-            }
             $(document).ready(function() {
                 $('#calendar').fullCalendar(parametres); //nous appelons dorénavant notre calendrier avec la variable parametres en guise de paramètres.
-                $('#bouton').on('click', function(){ //lorsqu'on clique sur le bouton nous lancçons la fonction switch_view
-                    switch_view(parametres);
-                });
             });
         </script>
     </body>
