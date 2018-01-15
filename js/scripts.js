@@ -27,11 +27,13 @@ var parametres = {
     },
     events :[
         {
+            id : 1,
             title  : 'event1',
             start  : '2017-12-14T10:00',
             end  : '2017-12-14T12:00'
         },
         {
+            id : 2,
             title  : 'Red event',
             start  : '2017-12-14T13:00',
             end  : '2017-12-14T15:00',
@@ -42,7 +44,17 @@ var parametres = {
     eventRender: function(event, element) {
         event.description != undefined ? element.find('.fc-title').append("<br/><p><i>" + event.description + '</i></p>') : '';
         element.find('.fc-time').prepend("<span class=\"glyphicon glyphicon-remove-circle pull-right\" aria-hidden=\"true\" id=\"event_" + event.id + "\"></span>");
-    }
+    },
+    eventClick: function(calEvent, jsEvent, view) {
+        //modification des values de notre formulaire
+        $('#evenement_id').val(calEvent.id);
+        $('#evenement_titre').val(calEvent.title);
+        $('#evenement_debut').val(calEvent.start.format('DD-MM-YYYY HH:mm'));
+        $('#evenement_fin').val(calEvent.end.format('DD-MM-YYYY HH:mm'));
+        $('#evenement_desc').val(calEvent.description);
+        //affichage de la fenêtre modale
+        $('#modalFormulaire').modal('toggle');
+    },
 }
 //fonction qui récupère le titre du calendrier
 function titreCalendrier (){
@@ -107,5 +119,22 @@ $(document).ready(function() {
     $(".glyphicon-remove-circle").on('click', function (){
         var id = $(this).attr('id').split('_');
         $('#calendar').fullCalendar('removeEvents', id[1]);
+    });
+    $('#evenement_submit').on('click', function(){
+        //On récupère l'objet Event de l'event que l'on veut modifier
+        var evenement = $('#calendar').fullCalendar('clientEvents', $('#evenement_id').val());
+        //On transforme les dates de debut et fin en date compatible avec Fullcalendar grâce à moment.js
+        var debut = moment($('#evenement_debut').val(), 'DD-MM-YYYY HH:mm').format('YYYY-MM-DD HH:mm');
+        var fin = moment($('#evenement_fin').val(), 'DD-MM-YYYY HH:mm').format('YYYY-MM-DD HH:mm');
+        //On attribut a notre Event nos nouvelles valeurs
+        evenement[0].title = $('#evenement_titre').val();
+        evenement[0].start = debut;
+        evenement[0].end = fin;
+        evenement[0].description = $('#evenement_desc').val();
+        //On fait appel à la méthode updateEvent afin de modifier notre événement.
+        $('#calendar').fullCalendar('updateEvent', evenement[0]);
+        //On ferme notre fenêtre modale
+        $('#modalFormulaire').modal('toggle');
+
     });
 });
