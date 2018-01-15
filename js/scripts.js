@@ -23,6 +23,23 @@ var parametres = {
             alert('Vous avez sélectionné du ' + start.format('DD/MM/YYY') + ' au ' + end.format('DD/MM/YYY'));
         }
 
+    },
+    events :[
+        {
+            title  : 'event1',
+            start  : '2017-12-14T10:00',
+            end  : '2017-12-14T12:00'
+        },
+        {
+            title  : 'Red event',
+            start  : '2017-12-14T13:00',
+            end  : '2017-12-14T15:00',
+            color  : 'red',
+            description : 'Super cet event !'
+        }
+    ],
+    eventRender: function(event, element) {
+        event.description != undefined ? element.find('.fc-title').append("<br/><p><i>" + event.description + '</i></p>') : '';
     }
 }
 //fonction qui récupère le titre du calendrier
