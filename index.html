@@ -8,6 +8,7 @@
         <!--Fichiers CSS-->
         <link rel="stylesheet" href="css/fullcalendar.min.css">
         <link rel="stylesheet" href="css/bootstrap.min.css">
+        <link rel="stylesheet" href="css/styles.css">
         
         <!--Fichiers JS-->
         <script src="js/jquery-3.2.1.min.js"></script>
@@ -17,7 +18,31 @@
         <script src="js/bootstrap.min.js"></script>
     </head>
     <body>
-        <button id="bouton">Cacher calendrier</button>
+        <nav class="navbar navbar-default navbar-fixed-top">
+            <div class="container">
+                    <div class="navbar-header">
+                            <!-- Bouton visible sur petits écrans -->
+                            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#menuCollapse" aria-expanded="false">
+                                    <span class="sr-only">Toggle navigation</span>
+                                    <span class="icon-bar"></span>
+                                    <span class="icon-bar"></span>
+                                    <span class="icon-bar"></span>
+                            </button>
+                            <!-- Suite du Header -->
+                            <a href="#" class="navbar-brand" title="Période Précédente" id="prev"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span></a>
+                            <a href="#" class="navbar-brand" title="Période Suivante" id="next"><span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></a>
+                            <p class="navbar-text" id="titreCalendrier"></p>
+                    </div>
+                    <!-- Partie du menu collapsée sur petits écrans -->
+                    <div class="collapse navbar-collapse" id="menuCollapse">
+                            <ul class="nav navbar-nav">
+                                    <li><a href="#" title="Affichage du calendrier Mensuel" id="affichageMois">Mois</a></li>
+                                    <li><a href="#" title="Affichage de l'agenda hebdomadaire" id="affichageSemaine">Semaine</a></li>
+                                    <li><a href="#" title="Affichage de l'agenda journalier" id="affichageJour">Jour</a></li>
+                            </ul>
+                    </div>
+            </div>
+        </nav>
         <div id="calendar"></div>
     
         <script>
