@@ -11,6 +11,7 @@ var parametres = {
     defaultView : 'agendaWeek',
     selectable: true,
     themeSystem: 'bootstrap3',
+    editable : true,
     select: function( start, end, jsEvent, view ){
         //start est l'heure de début de la sélection
         //end est l'heure de fin de la sélection
@@ -40,6 +41,7 @@ var parametres = {
     ],
     eventRender: function(event, element) {
         event.description != undefined ? element.find('.fc-title').append("<br/><p><i>" + event.description + '</i></p>') : '';
+        element.find('.fc-time').prepend("<span class=\"glyphicon glyphicon-remove-circle pull-right\" aria-hidden=\"true\" id=\"event_" + event.id + "\"></span>");
     }
 }
 //fonction qui récupère le titre du calendrier
@@ -101,5 +103,9 @@ $(document).ready(function() {
         $('.navbar-collapse').collapse('hide');
         $(this).parent().siblings().removeClass('active');
         $(this).parent().addClass('active');
+    });
+    $(".glyphicon-remove-circle").on('click', function (){
+        var id = $(this).attr('id').split('_');
+        $('#calendar').fullCalendar('removeEvents', id[1]);
     });
 });
