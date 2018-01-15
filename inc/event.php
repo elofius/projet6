@@ -50,4 +50,8 @@ if ($action == 'addEvent'){ // On ajoute un nouvel événement
     }
     //on encode en JSON puis on affiche le résultat
     echo json_encode($events);
+}elseif ($action == 'supprEvent'){
+	$sql = "DELETE FROM events WHERE id=$_GET[id]";
+	$db->exec($sql) or die (print_r($db->errorInfo()));
+	echo "L'événement a été supprimé avec succès.";
 }

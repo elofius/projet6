@@ -24,7 +24,7 @@ var parametres = {
     ],
     eventRender: function(event, element) {
         event.description != undefined ? element.find('.fc-title').append("<br/><p><i>" + event.description + '</i></p>') : '';
-        element.find('.fc-time').prepend("<span class=\"glyphicon glyphicon-remove-circle pull-right\" aria-hidden=\"true\" id=\"event_" + event.id + "\"></span>");
+        element.find('.fc-content').attr('evtId',event.id);
     },
     eventClick: function(calEvent, jsEvent, view) {
         //modification des values de notre formulaire
@@ -54,6 +54,19 @@ function ajoutEvenement(start, end){
     $('#evenement_fin').val(end);
     $('#evenement_desc').val('');
     $('#modalFormulaire').modal('toggle');
+}
+//fonction pour supprimer un evenement
+function supprimerEvt(id){
+    if (confirm('Êtes-vous sûr de vouloir supprimer cet événement ?')){
+        $.ajax({
+            type: "GET",
+            url : "inc/event.php?action=supprEvent&id=" + id ,
+            success: function(data){
+                console.log(data);
+                $('#calendar').fullCalendar('removeEvents', id);
+            },
+        });
+    }
 }
 $(document).ready(function() {
     $('#calendar').fullCalendar(parametres); //nous appelons dorénavant notre calendrier avec la variable parametres en guise de paramètres.
@@ -146,5 +159,21 @@ $(document).ready(function() {
     });
     $("#nvEvenement").on('click', function(){
         ajoutEvenement(start.format('DD-MM-YYYY HH:mm'), end.format('DD-MM-YYYY HH:mm'));
+    });
+    $("body").on("contextmenu", '.fc-time-grid-event', function(e) {
+        //on ajoute un attribut onClick à la balise <a id="supprimerEvt"> appelant la fonction supprimerEvt(id)  
+        $('#supprimerEvt').attr('onClick','supprimerEvt(' + $(this).children('.fc-content').attr('evtId') + '); return false;');
+        //modification du CSS de contextMenu pour l'afficher et le positionner aux coordonées de la souris
+        $("#contextMenu").css({
+            display: "block",
+            left: e.pageX,
+            top: e.pageY
+        });
+        //return false empéchera l'apparition du menu contextuel par défaut
+        return false;
+    });
+    //lorsqu'on clique sur la page, on cache contextMenu
+    $(document).mouseup(function(){
+            $("#contextMenu").hide();
     });
 });
