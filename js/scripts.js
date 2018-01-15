@@ -39,18 +39,24 @@ $(document).ready(function() {
     $("#datePicker").datepicker({
         language:'fr', //Passe le datepicker en français
         todayHighlight: true //Met en surbrillance la date du jour
+    }).on('changeDate',function(e){
+        // On utilise la méthode gotoDate pour se positionner sur la date cliquée
+        $('#calendar').fullCalendar('gotoDate', $(this).datepicker('getDate'));
+        //on récupère le nouveau titre de notre calendrier
+        titreCalendrier();
     });
     //lorsque l'on clique sur #prev...
     $('#prev').on('click', function(){
-        //on appelle la méthode 'prev'
         $('#calendar').fullCalendar('prev');
-        //puis on met à jour le titre
         titreCalendrier();
+        //on appelle la méthode update et on y attribue la date actuelle de fullcalendar
+        $("#datePicker").datepicker('update',$('#calendar').fullCalendar('getDate').format('DD-MM-YYYY'));
     });
     //même chose pour lorsqe l'on clique sur #next
     $('#next').on('click', function(){
         $('#calendar').fullCalendar('next');
         titreCalendrier();
+        $("#datePicker").datepicker('update',$('#calendar').fullCalendar('getDate').format('DD-MM-YYYY'));
     });
     //lorsque l'on clique sur mois
     $('#affichageMois').on('click', function(){
