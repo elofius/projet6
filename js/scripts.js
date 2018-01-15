@@ -36,6 +36,36 @@ var parametres = {
         //affichage de la fenêtre modale
         $('#modalFormulaire').modal('toggle');
     },
+    eventDrop: function(event, delta, revertFunc) {
+        if (!confirm("Voulez-vous vraiment déplacer cet événement ?")) {
+            //si nous annulons nous revenons à l'état précédent
+            revertFunc();
+        }else{
+            $.ajax({
+                type: "GET",
+                //nous envoyons à event.php : l'id de l'event, ses dates de début et de fin préalablement formatées
+                url : "inc/event.php?action=moveEvent&id=" + event.id + "&start=" + event.start.format('YYYY-MM-DD HH:mm') + "&end=" + event.end.format('YYYY-MM-DD HH:mm'),
+                success: function(data){
+                    console.log(data);
+                },
+            });
+        }
+
+    },
+    eventResize: function(event, delta, revertFunc) {
+        if (!confirm("Voulez-vous vraiment déplacer cet événement ?")) {
+            revertFunc();
+        }else{
+            $.ajax({
+                type: "GET",
+                url : "inc/event.php?action=moveEvent&id=" + event.id + "&start=" + event.start.format('YYYY-MM-DD HH:mm') + "&end=" + event.end.format('YYYY-MM-DD HH:mm'),
+                success: function(data){
+                    console.log(data);
+                },
+            });
+        }
+
+    }
 }
 //fonction qui récupère le titre du calendrier
 function titreCalendrier (){

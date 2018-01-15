@@ -59,4 +59,8 @@ if ($action == 'addEvent'){ // On ajoute un nouvel événement
     $sql = "UPDATE events SET title=\"$titre\", start=\"$debut\", end=\"$fin\", description=\"$desc\" WHERE id=$id";
     $db->exec($sql) or die (print_r(utf8_string_array_encode($db->errorInfo())));
     echo "L'événement a été modifié avec succès.";
+}elseif ($action == 'moveEvent'){
+    $sql = "UPDATE events SET start=\"$_GET[start]\", end=\"$_GET[end]\" WHERE id=$_GET[id]";
+    $db->exec($sql) or die (print_r(utf8_string_array_encode($db->errorInfo())));
+    echo "L'événement a été déplacé avec succès.";
 }
