@@ -8,6 +8,7 @@
         <!--Fichiers CSS-->
         <link rel="stylesheet" href="css/fullcalendar.min.css">
         <link rel="stylesheet" href="css/bootstrap.min.css">
+        <link rel="stylesheet" href="css/bootstrap-datepicker.min.css">
         <link rel="stylesheet" href="css/styles.css">
         
         <!--Fichiers JS-->
@@ -16,6 +17,8 @@
         <script src="js/fullcalendar.min.js"></script>
         <script src="js/locale-all.js"></script>
         <script src="js/bootstrap.min.js"></script>
+        <script src="js/bootstrap-datepicker.min.js"></script>
+        <script src="js/locales/bootstrap-datepicker.fr.min.js"></script>
         <script src="js/scripts.js"></script>
     </head>
     <body>
@@ -44,6 +47,17 @@
                     </div>
             </div>
         </nav>
-        <div id="calendar"></div>
+        <div class="container-fluid">   
+            <div class="row">
+                <div class="col-xs-12 col-md-10 col-md-push-2">
+                <!-- fenêtre principale fullcalendar -->    
+                    <div id="calendar"></div>
+                </div>
+
+                <div class="col-xs-12 col-md-2 col-md-pull-10">
+                    <div id="datePicker"></div>
+                </div>
+            </div>
+        </div>
     </body>
 </html>

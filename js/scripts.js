@@ -36,6 +36,10 @@ function titreCalendrier (){
 $(document).ready(function() {
     $('#calendar').fullCalendar(parametres); //nous appelons dorénavant notre calendrier avec la variable parametres en guise de paramètres.
     titreCalendrier();
+    $("#datePicker").datepicker({
+        language:'fr', //Passe le datepicker en français
+        todayHighlight: true //Met en surbrillance la date du jour
+    });
     //lorsque l'on clique sur #prev...
     $('#prev').on('click', function(){
         //on appelle la méthode 'prev'
@@ -49,7 +53,6 @@ $(document).ready(function() {
         titreCalendrier();
     });
     //lorsque l'on clique sur mois
-    $('affichageMois').onClick
     $('#affichageMois').on('click', function(){
         //On appelle la méthode changeView
         $('#calendar').fullCalendar('changeView', 'month');
