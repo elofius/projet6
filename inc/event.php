@@ -25,6 +25,7 @@ ISSET($_POST['evenement_titre']) ? $titre = utf8_decode(htmlspecialchars($_POST[
 ISSET($_POST['evenement_debut']) ? $debut = $_POST['evenement_debut'] : $debut = '';
 ISSET($_POST['evenement_fin']) ? $fin = $_POST['evenement_fin'] : $fin = '';
 ISSET($_POST['evenement_desc']) ? $desc = utf8_decode(htmlspecialchars($_POST['evenement_desc'])) : $desc = '';
+ISSET($_POST['evenement_id']) ? $id = $_POST['evenement_id'] : $id = '';
 
 //convertion des dates en format compatible DATETIME
 $debut = date('Y-m-d H:i', strtotime($debut));
@@ -54,4 +55,8 @@ if ($action == 'addEvent'){ // On ajoute un nouvel événement
 	$sql = "DELETE FROM events WHERE id=$_GET[id]";
 	$db->exec($sql) or die (print_r($db->errorInfo()));
 	echo "L'événement a été supprimé avec succès.";
+}elseif ($action == 'modifEvent'){
+    $sql = "UPDATE events SET title=\"$titre\", start=\"$debut\", end=\"$fin\", description=\"$desc\" WHERE id=$id";
+    $db->exec($sql) or die (print_r(utf8_string_array_encode($db->errorInfo())));
+    echo "L'événement a été modifié avec succès.";
 }

@@ -125,7 +125,8 @@ $(document).ready(function() {
         $('#calendar').fullCalendar('removeEvents', id[1]);
     });
     $('#evenement_submit').on('click', function(){
-       //si $('#evenement_id').val()  est vide, c'est forcément que nous ajoutons un nouvel événement
+        //nous serialisons maintenant le formulaire dès le clique
+        var donnees = $('#formulaire').serialize();
         if ($('#evenement_id').val() != '')
         {
             //on récupère l'objet Event de l'event que l'on veut modifier
@@ -133,24 +134,27 @@ $(document).ready(function() {
             //on transforme les dates de debut et fin en date compatible avec Fullcalendar grâce à moment.js
             var debut = moment($('#evenement_debut').val(), 'DD-MM-YYYY HH:mm').format('YYYY-MM-DD HH:mm');
             var fin = moment($('#evenement_fin').val(), 'DD-MM-YYYY HH:mm').format('YYYY-MM-DD HH:mm');
-
             evenement[0].title = $('#evenement_titre').val();
             evenement[0].start = debut;
             evenement[0].end = fin;
             evenement[0].description = $('#evenement_desc').val();
             $('#calendar').fullCalendar('updateEvent', evenement[0]);
+            //on envoie le formulaire à event.php
+            $.ajax({
+                type: "POST",
+                url : "inc/event.php?action=modifEvent",
+                data: donnees,
+                success: function(data){
+                    console.log(data);
+                },
+            });
         }else{
-             //Nous serialisons les données du formulaire pour les envoyer via notre requête Ajax
-            var donnees = $('#formulaire').serialize();
             $.ajax({
                 type: "POST",
                 url : "inc/event.php?action=addEvent",
                 data: donnees,
                 success: function(data){
-                    //Code à executer lorsque l'appel Ajax est un succès
-                    //On affiche data dans la console javascript
                     console.log(data);
-                    //On rafraichit le calendrier
                     $('#calendar').fullCalendar('refetchEvents');
                 },
             });
