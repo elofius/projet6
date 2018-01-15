@@ -25,21 +25,8 @@ var parametres = {
         }
 
     },
-    events :[
-        {
-            id : 1,
-            title  : 'event1',
-            start  : '2017-12-14T10:00',
-            end  : '2017-12-14T12:00'
-        },
-        {
-            id : 2,
-            title  : 'Red event',
-            start  : '2017-12-14T13:00',
-            end  : '2017-12-14T15:00',
-            color  : 'red',
-            description : 'Super cet event !'
-        }
+    eventSources : [
+        'inc/event.php?action=load'
     ],
     eventRender: function(event, element) {
         event.description != undefined ? element.find('.fc-title').append("<br/><p><i>" + event.description + '</i></p>') : '';
@@ -121,20 +108,48 @@ $(document).ready(function() {
         $('#calendar').fullCalendar('removeEvents', id[1]);
     });
     $('#evenement_submit').on('click', function(){
-        //On récupère l'objet Event de l'event que l'on veut modifier
-        var evenement = $('#calendar').fullCalendar('clientEvents', $('#evenement_id').val());
-        //On transforme les dates de debut et fin en date compatible avec Fullcalendar grâce à moment.js
-        var debut = moment($('#evenement_debut').val(), 'DD-MM-YYYY HH:mm').format('YYYY-MM-DD HH:mm');
-        var fin = moment($('#evenement_fin').val(), 'DD-MM-YYYY HH:mm').format('YYYY-MM-DD HH:mm');
-        //On attribut a notre Event nos nouvelles valeurs
-        evenement[0].title = $('#evenement_titre').val();
-        evenement[0].start = debut;
-        evenement[0].end = fin;
-        evenement[0].description = $('#evenement_desc').val();
-        //On fait appel à la méthode updateEvent afin de modifier notre événement.
-        $('#calendar').fullCalendar('updateEvent', evenement[0]);
-        //On ferme notre fenêtre modale
-        $('#modalFormulaire').modal('toggle');
+       //si $('#evenement_id').val()  est vide, c'est forcément que nous ajoutons un nouvel événement
+        if ($('#evenement_id').val() != '')
+        {
+            //on récupère l'objet Event de l'event que l'on veut modifier
+            var evenement = $('#calendar').fullCalendar('clientEvents', $('#evenement_id').val());
+            //on transforme les dates de debut et fin en date compatible avec Fullcalendar grâce à moment.js
+            var debut = moment($('#evenement_debut').val(), 'DD-MM-YYYY HH:mm').format('YYYY-MM-DD HH:mm');
+            var fin = moment($('#evenement_fin').val(), 'DD-MM-YYYY HH:mm').format('YYYY-MM-DD HH:mm');
 
+            evenement[0].title = $('#evenement_titre').val();
+            evenement[0].start = debut;
+            evenement[0].end = fin;
+            evenement[0].description = $('#evenement_desc').val();
+            $('#calendar').fullCalendar('updateEvent', evenement[0]);
+        }else{
+             //Nous serialisons les données du formulaire pour les envoyer via notre requête Ajax
+            var donnees = $('#formulaire').serialize();
+            $.ajax({
+                type: "POST",
+                url : "inc/event.php?action=addEvent",
+                data: donnees,
+                success: function(data){
+                    //Code à executer lorsque l'appel Ajax est un succès
+                    //On affiche data dans la console javascript
+                    console.log(data);
+                    //On rafraichit le calendrier
+                    $('#calendar').fullCalendar('refetchEvents');
+                },
+            });
+        }
+        $('#modalFormulaire').modal('toggle');
+    });
+    $("#nvEvenement").on('click', function(){
+        //Modification du titre du modal
+        $('.modal-title').html('Formulaire d\'ajout d\'un événement');
+        //Effaçage de toutes les valeurs des champs du formulaire
+        $('#evenement_id').val('');
+        $('#evenement_titre').val('');
+        $('#evenement_debut').val(moment().format('DD-MM-YYYY HH:00'));
+        $('#evenement_fin').val(moment().add(1, 'hour').format('DD-MM-YYYY HH:00'));
+        $('#evenement_desc').val('');
+        //Affichage du modal
+        $('#modalFormulaire').modal('toggle');
     });
 });
