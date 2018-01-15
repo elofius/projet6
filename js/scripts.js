@@ -17,13 +17,7 @@ var parametres = {
         //end est l'heure de fin de la sélection
         //jsEvent contient les informations Javascript telles que les cooredonnées de souris
         //view contient les éléments de la vue actuelle
-        if (view.type != 'month')
-        {
-            alert('Heure de début de sélection : ' + start.format('HH:mm') + '\n' + 'Heure de fin de sélection : ' + end.format('HH:mm'));
-        }else{
-            alert('Vous avez sélectionné du ' + start.format('DD/MM/YYY') + ' au ' + end.format('DD/MM/YYY'));
-        }
-
+        ajoutEvenement(start.format('DD-MM-YYYY HH:mm'), end.format('DD-MM-YYYY HH:mm'));
     },
     eventSources : [
         'inc/event.php?action=load'
@@ -51,6 +45,16 @@ function titreCalendrier (){
     $('#titreCalendrier').html(view.title);
 }
 
+//fonction a appeler pour ajouter un événement
+function ajoutEvenement(start, end){
+    $('.modal-title').html('Formulaire d\'ajout d\'un événement');
+    $('#evenement_id').val('');
+    $('#evenement_titre').val('');
+    $('#evenement_debut').val(start);
+    $('#evenement_fin').val(end);
+    $('#evenement_desc').val('');
+    $('#modalFormulaire').modal('toggle');
+}
 $(document).ready(function() {
     $('#calendar').fullCalendar(parametres); //nous appelons dorénavant notre calendrier avec la variable parametres en guise de paramètres.
     titreCalendrier();
@@ -141,15 +145,6 @@ $(document).ready(function() {
         $('#modalFormulaire').modal('toggle');
     });
     $("#nvEvenement").on('click', function(){
-        //Modification du titre du modal
-        $('.modal-title').html('Formulaire d\'ajout d\'un événement');
-        //Effaçage de toutes les valeurs des champs du formulaire
-        $('#evenement_id').val('');
-        $('#evenement_titre').val('');
-        $('#evenement_debut').val(moment().format('DD-MM-YYYY HH:00'));
-        $('#evenement_fin').val(moment().add(1, 'hour').format('DD-MM-YYYY HH:00'));
-        $('#evenement_desc').val('');
-        //Affichage du modal
-        $('#modalFormulaire').modal('toggle');
+        ajoutEvenement(start.format('DD-MM-YYYY HH:mm'), end.format('DD-MM-YYYY HH:mm'));
     });
 });
