@@ -41,9 +41,13 @@ if ($action == 'addEvent'){ // On ajoute un nouvel événement
     $db->exec($sql) or die (print_r($db->errorInfo()));
     echo "L'événement a été ajouté avec succès.";
 }elseif ($action == 'load'){
-    //On créé un tableaux $events dans lequel seront stockés nos événements
+    //On créé un table aux $events dans lequel seront stockés nos événements
+    $next = "";
+    if ((ISSET($_GET['couleur'])) && ($_GET['couleur'] != "tous")){
+        $next = " AND color='$_GET[couleur]'";
+    }
     $events = array();
-    $sql = "SELECT * FROM events WHERE start <= '$_GET[end]' AND end >= '$_GET[start]'";
+    $sql = "SELECT * FROM events WHERE start <= '$_GET[end]' AND end >= '$_GET[start]'".$next;
     // On lance la requête et on lit chaque ligne de résultat
     foreach ($db->query($sql) as $row) {
         $rows = utf8_string_array_encode($row);

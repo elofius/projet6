@@ -213,4 +213,16 @@ $(document).ready(function() {
     $(document).mouseup(function(){
             $("#contextMenu").hide();
     });
+    $('.glyphicon-stop').next().on('click', function(){
+        var couleur = {
+            'rgb(255, 0, 0)' : 'red',
+            'rgb(51, 51, 51)' : 'tous',
+            'rgb(255, 165, 0)' : 'orange',
+            'rgb(255, 255, 0)' : 'yellow',
+            'rgb(0, 128, 0)' : 'green'
+        }
+        $('#calendar').fullCalendar( 'removeEventSources');
+        $('#calendar').fullCalendar( 'addEventSource', 'inc/event.php?action=load&couleur='+ couleur[$(this).prev().css('color')]);
+       // $('#calendar').fullCalendar('refetchEvents');
+    });
 });
