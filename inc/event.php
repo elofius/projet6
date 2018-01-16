@@ -26,6 +26,7 @@ ISSET($_POST['evenement_debut']) ? $debut = $_POST['evenement_debut'] : $debut =
 ISSET($_POST['evenement_fin']) ? $fin = $_POST['evenement_fin'] : $fin = '';
 ISSET($_POST['evenement_desc']) ? $desc = utf8_decode(htmlspecialchars($_POST['evenement_desc'])) : $desc = '';
 ISSET($_POST['evenement_id']) ? $id = $_POST['evenement_id'] : $id = '';
+ISSET($_POST['evenement_couleur']) ? $couleur = $_POST['evenement_couleur'] : $couleur = '';
 
 //convertion des dates en format compatible DATETIME
 $debut = date('Y-m-d H:i', strtotime($debut));
@@ -35,7 +36,7 @@ $db = new PDO($dsn, $user, $password);
 
 if ($action == 'addEvent'){ // On ajoute un nouvel événement
     //On prépare la requête SQL
-    $sql = "INSERT INTO events (title, start, end, description) VALUES (\"$titre\", \"$debut\", \"$fin\", \"$desc\")";
+    $sql = "INSERT INTO events (title, start, end, description, color) VALUES (\"$titre\", \"$debut\", \"$fin\", \"$desc\", \"$couleur\")";
     //On l'éxécute et on stoppe l'éxécution de la page si une erreur survient
     $db->exec($sql) or die (print_r($db->errorInfo()));
     echo "L'événement a été ajouté avec succès.";
@@ -56,7 +57,7 @@ if ($action == 'addEvent'){ // On ajoute un nouvel événement
 	$db->exec($sql) or die (print_r($db->errorInfo()));
 	echo "L'événement a été supprimé avec succès.";
 }elseif ($action == 'modifEvent'){
-    $sql = "UPDATE events SET title=\"$titre\", start=\"$debut\", end=\"$fin\", description=\"$desc\" WHERE id=$id";
+    $sql = "UPDATE events SET title=\"$titre\", start=\"$debut\", end=\"$fin\", description=\"$desc\", color=\"$couleur\" WHERE id=$id";
     $db->exec($sql) or die (print_r(utf8_string_array_encode($db->errorInfo())));
     echo "L'événement a été modifié avec succès.";
 }elseif ($action == 'moveEvent'){

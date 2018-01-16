@@ -33,6 +33,7 @@ var parametres = {
         $('#evenement_debut').val(calEvent.start.format('DD-MM-YYYY HH:mm'));
         $('#evenement_fin').val(calEvent.end.format('DD-MM-YYYY HH:mm'));
         $('#evenement_desc').val(calEvent.description);
+        $('#evenement_couleur option[value="' + calEvent.color + '"]').prop('selected', true);
         //affichage de la fenêtre modale
         $('#modalFormulaire').modal('toggle');
     },
@@ -83,6 +84,7 @@ function ajoutEvenement(start, end){
     $('#evenement_debut').val(start);
     $('#evenement_fin').val(end);
     $('#evenement_desc').val('');
+    $('#evenement_couleur').val('');
     $('#modalFormulaire').modal('toggle');
 }
 //fonction pour supprimer un evenement
@@ -176,6 +178,7 @@ $(document).ready(function() {
                 data: donnees,
                 success: function(data){
                     console.log(data);
+                    $('#calendar').fullCalendar('refetchEvents');
                 },
             });
         }else{
