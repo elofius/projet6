@@ -1,3 +1,20 @@
+var commerciaux = {
+    'jeanb' : {
+        'nom' : 'Bon',
+        'prénom' : 'Jean',
+        'couleur' : 'orange'
+    },
+    'pierreq' : {
+        'nom' : 'Quiroule',
+        'prénom' : 'Pierre',
+        'couleur' : 'green'
+    },
+    'paulh' : {
+        'nom' : 'Ho',
+        'prénom' : 'Paul',
+        'couleur' : 'red'
+    }
+};
 var parametres = {
     //langue du calendrier
     locale: 'fr',
@@ -221,8 +238,15 @@ $(document).ready(function() {
             'rgb(255, 255, 0)' : 'yellow',
             'rgb(0, 128, 0)' : 'green'
         }
+        var affichageUtilisateur = "";
+        $.each(commerciaux, (key, val) => {
+            if (commerciaux[key]['couleur'] ==  couleur[$(this).prev().css('color')]){
+                console.log("Vous avez sélectionné " + commerciaux[key]['prénom'] + " " + commerciaux[key]['nom']);
+                affichageUtilisateur = '&couleur='+couleur[$(this).prev().css('color')];
+            }
+         });
         $('#calendar').fullCalendar( 'removeEventSources');
-        $('#calendar').fullCalendar( 'addEventSource', 'inc/event.php?action=load&couleur='+ couleur[$(this).prev().css('color')]);
-       // $('#calendar').fullCalendar('refetchEvents');
+        $('#calendar').fullCalendar( 'addEventSource', 'inc/event.php?action=load'+affichageUtilisateur);
+        $('#calendar').fullCalendar('refetchEvents');
     });
 });
