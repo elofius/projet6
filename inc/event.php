@@ -1,4 +1,5 @@
 <?php
+session_start();
 //inclusion du fichier config.php
 require('config.php');
 

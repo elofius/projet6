@@ -36,9 +36,7 @@ var parametres = {
         //view contient les éléments de la vue actuelle
         ajoutEvenement(start.format('DD-MM-YYYY HH:mm'), end.format('DD-MM-YYYY HH:mm'));
     },
-    eventSources : [
-        'inc/event.php?action=load'
-    ],
+    
     eventRender: function(event, element) {
         event.description != undefined ? element.find('.fc-title').append("<br/><p><i>" + event.description + '</i></p>') : '';
         element.find('.fc-content').attr('evtId',event.id);
@@ -117,9 +115,47 @@ function supprimerEvt(id){
         });
     }
 }
+//fonction permettant de connecter un utilisateur
+function connecter(utilisateur){
+    $.ajax({
+        type: "GET",
+        url : "inc/session.php?action=affecte&login=" + utilisateur ,
+        success: function(data){
+            utilisateur != "secretaire" ? affichageUtilisateur = "&couleur="+commerciaux[utilisateur]['couleur'] : affichageUtilisateur = "";
+            $('#calendar').fullCalendar('addEventSource', 'inc/event.php?action=load'+affichageUtilisateur);
+            location.reload(true);
+        }
+    });
+}
+
+function deco(){
+   $.ajax({
+        type: "GET",
+        url : "inc/session.php?action=deco",
+        success: function(data){
+            $('#calendar').fullCalendar( 'removeEventSources');
+            location.reload(true);
+        }
+    }); 
+}
+
+function quiEstConnecte(){
+    $.ajax({
+        type: "GET",
+        url : "inc/session.php?action=who",
+        success: function(data){
+            if (data !== ""){
+                data !== "secretaire" ? affichageUtilisateur = "&couleur="+commerciaux[data]['couleur'] : affichageUtilisateur = "";
+                $('#calendar').fullCalendar('addEventSource', 'inc/event.php?action=load'+affichageUtilisateur);
+                $('#calendar').fullCalendar('refetchEvents');
+            }   
+        }
+    }); 
+}
 $(document).ready(function() {
     $('#calendar').fullCalendar(parametres); //nous appelons dorénavant notre calendrier avec la variable parametres en guise de paramètres.
     titreCalendrier();
+    quiEstConnecte();
     $("#datePicker").datepicker({
         language:'fr', //Passe le datepicker en français
         todayHighlight: true //Met en surbrillance la date du jour

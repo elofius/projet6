@@ -1,3 +1,7 @@
+<?php
+session_start();
+ISSET($_SESSION['login']) ? $utilisateur = $_SESSION['login'] : $utilisateur = "Personne";
+?>
 <!doctype html>
 <html lang="fr">
     <head>
@@ -58,12 +62,34 @@
 
                 <div class="col-xs-12 col-md-2 col-md-pull-10">
                     <div id="datePicker"></div>
-                    <div>
-                        <p><span class="glyphicon glyphicon glyphicon-stop"></span> <a href="#">Secrétaire</a></p>
-                        <p><span class="glyphicon glyphicon glyphicon-stop" style="color:orange;"></span> <a href="#">Jean</a></p>
-                        <p><span class="glyphicon glyphicon glyphicon-stop" style="color:green;"></span> <a href="#">Pierre</a></p>
-                        <p><span class="glyphicon glyphicon glyphicon-stop" style="color:red;"></span> <a href="#">Paul</a></p>
-                    </div>
+                    <div id="utilisateurActif"><p>Utilisateur : <strong><?php echo $utilisateur; ?></strong></p></div>
+                    <?php
+                    if ($utilisateur != "Personne"){
+                        if ($utilisateur == "secretaire"){
+                            ?>
+                            <div>
+                                <p><span class="glyphicon glyphicon glyphicon-stop"></span> <a href="#">Secrétaire</a></p>
+                                <p><span class="glyphicon glyphicon glyphicon-stop" style="color:orange;"></span> <a href="#">Jean</a></p>
+                                <p><span class="glyphicon glyphicon glyphicon-stop" style="color:green;"></span> <a href="#">Pierre</a></p>
+                                <p><span class="glyphicon glyphicon glyphicon-stop" style="color:red;"></span> <a href="#">Paul</a></p>
+                            </div>
+                            <?php
+                        }
+                        ?>
+                    <p><a href="#" onClick="deco();">Se déconnecter</a></p>
+                        <?php
+                    }else{
+                        ?>
+                        <div>
+                            <p>Sélectionnez un profil à connecter</p>
+                            <p><a href="#" onClick="connecter('secretaire');">Secrétaire</a></p>
+                            <p><a href="#" onClick="connecter('jeanb');">Jean</a></p>
+                            <p><a href="#" onClick="connecter('pierreq');">Pierre</a></p>
+                            <p><a href="#" onClick="connecter('paulh');">Paul</a></p>
+                        </div>
+                        <?php
+                    }
+                    ?>
                 </div>
             </div>
         </div>
